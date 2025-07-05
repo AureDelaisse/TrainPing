@@ -42,41 +42,65 @@ graph TB
 - **Base de données** : SQLite (développement)
 - **Canvas** : Konva.js pour l'éditeur visuel
 
+## 📁 Structure de la Documentation
+
+- **📘 [00-Fundamentals](./00-Fundamentals/)** - Les bases du développement web
+- **🔧 [01-Setup](./01-Setup/)** - Configuration et installation
+- **⚙️ [02-Backend](./02-Backend/)** - Architecture serveur et API
+- **🎨 [03-Frontend](./03-Frontend/)** - Interface utilisateur Vue.js
+- **✨ [04-Features](./04-Features/)** - Fonctionnalités détaillées
+- **🏗️ [05-Architecture](./05-Architecture/)** - Patterns et structure
+- **🧪 [06-Testing](./06-Testing/)** - Tests et qualité
+- **🚀 [07-Deployment](./07-Deployment/)** - Déploiement et production
+- **💡 [08-Exercises](./08-Exercises/)** - Exercices pratiques
+- **📋 [09-Best-Practices](./09-Best-Practices/)** - Bonnes pratiques
+
+## 🆕 Dernières Mises à Jour
+
+### REFONTE COMPLÈTE - Création d'Exercices par Type (Janvier 2025)
+Révolution de l'interface de création avec une approche **par type d'exercice** :
+- **Sélection guidée** : 4 types d'exercices clairement définis
+- **Formulaires spécialisés** : Interface adaptée à chaque besoin pédagogique
+- **Patterns prédéfinis** : Schémas visuels pour la régularité (diagonal, parallèle, pivot, axe central)
+- **Création rapide** : Plus besoin de dessiner, juste choisir et configurer
+- **Aperçu animé** : Visualisation en temps réel du schéma choisi
+- **Points techniques** : Suggestions contextuelles selon le pattern
+- **Simplicité maximale** : Exercice créé en 2-3 minutes
+
+👉 **[Guide de la Nouvelle Création d'Exercices](./04-Features/Exercise-Creation-By-Type.md)**
+
+### Créateur d'Exercices Canvas Avancé (Décembre 2024) - REMPLACÉ
+- ~~Interface 2 colonnes avec éditeur Konva.js~~
+- ~~Trajectoires réalistes tennis de table~~
+- ~~Grille 3x3 de directions~~
+
+👉 **[Historique - Ancien Éditeur Canvas](./04-Features/Exercise-Creator-Advanced.md)**
+
 ## 📚 Comment naviguer cette documentation
 
 ### 🚀 Pour débuter
-1. **Nouveau en développement web ?** Commencez par [[05-Guides/Installation|Guide d'installation]]
-2. **Nouveau en Node.js ?** Lisez [[02-Backend/Introduction-NodeJS|Introduction Node.js]]
-3. **Nouveau en Vue.js ?** Explorez [[03-Frontend/Introduction-Vue3|Introduction Vue.js 3]]
 
-### 🏗️ Comprendre l'architecture
-- [[01-Architecture/Vue-Ensemble|Vue d'ensemble de l'architecture]]
-- [[01-Architecture/Stack-Technique|Technologies utilisées]]
-- [[01-Architecture/Structure-Dossiers|Organisation des fichiers]]
+#### Installation du projet
+- **👨‍💻 Développeur expérimenté ?** → [Démarrage rapide (5 min)](./05-Guides/Quick-Start.md)
+- **🆕 Nouveau au développement web ?** → [Installation détaillée](./05-Guides/Installation.md)
+- **📥 Premier clone du repo ?** → Suivez les étapes du [README principal](../README.md)
 
-### 🔧 Backend (Serveur)
-- [[02-Backend/Express-Basics|Framework Express expliqué]]
-- [[02-Backend/API-Routes|Documentation des endpoints API]]
-- [[02-Backend/Prisma-ORM|Base de données avec Prisma]]
-- [[02-Backend/Modeles-Donnees|Schémas et relations]]
+#### Apprentissage des technologies
+1. **Nouveau en développement web ?** → [Les Fondamentaux](./00-Fundamentals/Web-Development-Basics.md)
+2. **Nouveau en Node.js ?** → [Express Deep Dive](./02-Backend/Express-Deep-Dive.md)
+3. **Nouveau en Vue.js ?** → [Vue Ecosystem Deep Dive](./03-Frontend/Vue-Ecosystem-Deep-Dive.md)
 
-### 🎨 Frontend (Interface)
-- [[03-Frontend/Composition-API|Script setup expliqué]]
-- [[03-Frontend/Composants|Architecture des composants]]
-- [[03-Frontend/Router|Navigation SPA]]
-- [[03-Frontend/Pinia-Store|Gestion d'état avec Pinia]]
-- [[03-Frontend/Tailwind-Guide|Guide Tailwind CSS]]
+### 📖 Documentation pédagogique
+- **[Fondamentaux Web](./00-Fundamentals/Web-Development-Basics.md)** - HTTP, JSON, CSS, JavaScript moderne
+- **[Express.js Complet](./02-Backend/Express-Deep-Dive.md)** - Middleware, routes, sécurité, performance
+- **[Vue.js Écosystème](./03-Frontend/Vue-Ecosystem-Deep-Dive.md)** - Réactivité, Composition API, Pinia
+- **[Exercices Pratiques](./08-Exercises/Practical-Exercises.md)** - Défis progressifs pour apprendre
+- **[Bonnes Pratiques](./09-Best-Practices/Development-Guidelines.md)** - Conventions et qualité de code
 
-### ⭐ Fonctionnalités détaillées
-- [[04-Features/Exercices/Creation-Exercice|Création d'exercices]]
-- [[04-Features/Exercices/Canvas-Editor|Éditeur canvas Konva.js]]
-- [[04-Features/Sessions/Gestion-Sessions|Gestion des sessions]]
-- [[04-Features/Entrainement/Mode-Training|Mode entraînement]]
-
-### 🛠️ Guides pratiques
-- [[05-Guides/Installation|Installation et setup]]
-- [[05-Guides/Developpement|Workflow de développement]]
-- [[05-Guides/Troubleshooting|Résolution de problèmes]]
+### ⭐ Fonctionnalités avancées
+- **[Créateur d'Exercices](./04-Features/Exercise-Creator-Advanced.md)** - Interface moderne et éditeur visuel
+- Sessions et entraînements (à venir)
+- Mode timer interactif (à venir)
 
 ## 🎯 Objectifs pédagogiques
 

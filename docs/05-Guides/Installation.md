@@ -63,13 +63,12 @@ Pour cloner le projet et gérer les versions.
 #### Option A : Avec Git (recommandé)
 ```bash
 # Cloner le repository
-git clone https://github.com/votre-username/tennis-table-app.git
-
-# Aller dans le dossier
+git clone [URL_DU_REPOSITORY]
 cd tennis-table-app
 
 # Vérifier la structure
 ls -la
+# Vous devriez voir : client/, server/, docs/, README.md
 ```
 
 #### Option B : Téléchargement ZIP
@@ -172,6 +171,27 @@ npm run dev
 
 **Test complet :** Ouvrir [http://localhost:5173](http://localhost:5173) dans votre navigateur. Vous devriez voir l'application TrainPing !
 
+### Première utilisation
+
+Une fois l'application lancée :
+
+1. **Accueil** : Vue d'ensemble des fonctionnalités
+2. **Exercices** : Voir les exercices prédéfinis ou créer le vôtre
+3. **Sessions** : Planifier vos entraînements
+4. **Créer un exercice** : Utiliser le nouveau système par types
+
+#### Créer votre premier exercice
+
+1. Cliquer sur "Nouvel exercice" depuis la page Exercices
+2. **Choisir le type "Régularité"** (plus simple pour commencer)
+3. Remplir le titre : ex. "Mon premier exercice"
+4. Sélectionner un pattern (ex. "Diagonal")
+5. Configurer les paramètres (30 balles, 3 séries)
+6. Ajouter des points techniques
+7. Cliquer "Créer l'exercice"
+
+🎉 **Votre exercice est créé !** Il apparaît maintenant dans la liste.
+
 ## 🏃‍♂️ Démarrage rapide quotidien
 
 Une fois l'installation terminée, voici la routine pour démarrer l'application :
@@ -233,7 +253,7 @@ npm run dev
 NODE_ENV=development
 PORT=3000
 
-# Base de données
+# Base de données (SQLite locale)
 DATABASE_URL="file:./dev.db"
 
 # Logs

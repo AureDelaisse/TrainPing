@@ -1,198 +1,197 @@
 <template>
-  <div class="max-w-4xl mx-auto space-y-6">
-    <!-- Header -->
-    <div class="flex justify-between items-center">
-      <div>
-        <h1 class="text-2xl font-bold text-gray-900">
-          {{ isEdit ? 'Modifier l\'exercice' : 'Nouvel exercice' }}
-        </h1>
-        <p class="mt-1 text-sm text-gray-600">
-          {{ isEdit ? 'Modifiez les détails de l\'exercice' : 'Créez un nouvel exercice d\'entraînement' }}
-        </p>
-      </div>
-      <router-link to="/exercises" class="btn-secondary">
-        Retour
-      </router-link>
-    </div>
-
-    <!-- Form -->
-    <form @submit.prevent="saveExercise" class="space-y-6">
-      <!-- Basic Info -->
-      <div class="card p-6">
-        <h3 class="text-lg font-semibold text-gray-900 mb-4">Informations de base</h3>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <!-- Title -->
-          <div class="md:col-span-2">
-            <label class="block text-sm font-medium text-gray-700 mb-2">Titre *</label>
-            <input
-              v-model="form.title"
-              type="text"
-              required
-              placeholder="Ex: Échauffement - Échanges réguliers"
-              class="input"
-            />
-          </div>
-
-          <!-- Description -->
-          <div class="md:col-span-2">
-            <label class="block text-sm font-medium text-gray-700 mb-2">Description *</label>
-            <textarea
-              v-model="form.description"
-              rows="3"
-              required
-              placeholder="Décrivez l'exercice et ses objectifs..."
-              class="input"
-            ></textarea>
-          </div>
-
-          <!-- Phase -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Phase *</label>
-            <select v-model="form.phase" required class="input">
-              <option value="">Sélectionner une phase</option>
-              <option v-for="phase in Object.values(PHASES)" :key="phase.value" :value="phase.value">
-                {{ phase.label }}
-              </option>
-            </select>
-          </div>
-
-          <!-- Difficulty -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Difficulté *</label>
-            <select v-model="form.difficulty" required class="input">
-              <option value="">Sélectionner une difficulté</option>
-              <option v-for="difficulty in Object.values(DIFFICULTIES)" :key="difficulty.value" :value="difficulty.value">
-                {{ difficulty.label }}
-              </option>
-            </select>
-          </div>
-
-          <!-- Duration -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Durée (secondes) *</label>
-            <input
-              v-model.number="form.duration"
-              type="number"
-              min="30"
-              max="1800"
-              required
-              placeholder="300"
-              class="input"
-            />
-            <p class="text-xs text-gray-500 mt-1">{{ formatDuration(form.duration) }}</p>
-          </div>
-
-          <!-- Repetitions -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Répétitions *</label>
-            <input
-              v-model.number="form.repetitions"
-              type="number"
-              min="1"
-              max="10"
-              required
-              placeholder="1"
-              class="input"
-            />
-          </div>
-        </div>
+  <div class="min-h-screen bg-gray-50">
+    <div class="max-w-4xl mx-auto px-4 py-8">
+      <!-- Header -->
+      <div class="mb-8">
+        <h1 class="text-2xl font-bold text-gray-900">Nouvel exercice</h1>
+        <p class="text-gray-600 mt-2">Choisissez d'abord le type d'exercice à créer</p>
       </div>
 
-      <!-- Visual Editor Placeholder -->
-      <div class="card p-6">
-        <h3 class="text-lg font-semibold text-gray-900 mb-4">Éditeur visuel</h3>
-        <div class="bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg p-12 text-center">
-          <div class="space-y-3">
-            <div class="w-16 h-16 bg-table-green-100 rounded-full flex items-center justify-center mx-auto">
-              <svg class="w-8 h-8 text-table-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
-            </div>
-            <h4 class="text-lg font-medium text-gray-900">Éditeur visuel Konva.js</h4>
-            <p class="text-gray-600">L'éditeur pour dessiner les trajectoires sera implémenté ici</p>
-            <p class="text-sm text-gray-500">Fonctionnalité à venir dans la prochaine version</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Actions -->
-      <div class="flex justify-end space-x-4">
-        <router-link to="/exercises" class="btn-secondary">
-          Annuler
-        </router-link>
+      <!-- Si aucun type sélectionné -->
+      <div v-if="!selectedType" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Card Régularité -->
         <button
-          type="submit"
-          :disabled="loading"
-          class="btn-primary"
+          @click="selectType('REGULARITY')"
+          class="p-6 bg-white rounded-xl border-2 border-gray-200 hover:border-blue-500 hover:shadow-lg transition-all text-left group"
         >
-          <div v-if="loading" class="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-          {{ isEdit ? 'Mettre à jour' : 'Créer l\'exercice' }}
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+              <ArrowPathIcon class="w-6 h-6 text-blue-600" />
+            </div>
+            <ArrowRightIcon class="w-5 h-5 text-gray-400 group-hover:text-blue-600" />
+          </div>
+          <h3 class="text-lg font-semibold text-gray-900 mb-2">Régularité</h3>
+          <p class="text-sm text-gray-600">
+            Exercice avec schéma répétitif fixe. Les joueurs répètent toujours les mêmes coups.
+          </p>
+          <p class="text-xs text-gray-500 mt-2">
+            Ex: Coup droit diagonal en continu
+          </p>
+        </button>
+
+        <!-- Card Régularité + Jeu libre -->
+        <button
+          @click="selectType('REGULARITY_FREE')"
+          class="p-6 bg-white rounded-xl border-2 border-gray-200 hover:border-green-500 hover:shadow-lg transition-all text-left group"
+        >
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+              <SparklesIcon class="w-6 h-6 text-green-600" />
+            </div>
+            <ArrowRightIcon class="w-5 h-5 text-gray-400 group-hover:text-green-600" />
+          </div>
+          <h3 class="text-lg font-semibold text-gray-900 mb-2">Régularité + Jeu libre</h3>
+          <p class="text-sm text-gray-600">
+            Schéma de base régulier, puis phase de jeu libre après X échanges.
+          </p>
+          <p class="text-xs text-gray-500 mt-2">
+            Ex: 6 coups droits puis point libre
+          </p>
+        </button>
+
+        <!-- Card Incertitude -->
+        <button
+          @click="selectType('UNCERTAINTY')"
+          class="p-6 bg-white rounded-xl border-2 border-gray-200 hover:border-purple-500 hover:shadow-lg transition-all text-left group"
+        >
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+              <QuestionMarkCircleIcon class="w-6 h-6 text-purple-600" />
+            </div>
+            <ArrowRightIcon class="w-5 h-5 text-gray-400 group-hover:text-purple-600" />
+          </div>
+          <h3 class="text-lg font-semibold text-gray-900 mb-2">Incertitude</h3>
+          <p class="text-sm text-gray-600">
+            Le joueur doit s'adapter. Choix entre plusieurs options selon la situation.
+          </p>
+          <p class="text-xs text-gray-500 mt-2">
+            Ex: Alterner revers/coup droit selon la balle
+          </p>
+        </button>
+
+        <!-- Card Situation de match -->
+        <button
+          @click="selectType('MATCH_SITUATION')"
+          class="p-6 bg-white rounded-xl border-2 border-gray-200 hover:border-orange-500 hover:shadow-lg transition-all text-left group"
+        >
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
+              <TrophyIcon class="w-6 h-6 text-orange-600" />
+            </div>
+            <ArrowRightIcon class="w-5 h-5 text-gray-400 group-hover:text-orange-600" />
+          </div>
+          <h3 class="text-lg font-semibold text-gray-900 mb-2">Situation de match</h3>
+          <p class="text-sm text-gray-600">
+            Simulation de points réels avec services, retours et stratégies.
+          </p>
+          <p class="text-xs text-gray-500 mt-2">
+            Ex: Service court + attaque
+          </p>
         </button>
       </div>
-    </form>
+
+      <!-- Si type sélectionné : Formulaire spécifique -->
+      <div v-else>
+        <!-- Breadcrumb -->
+        <div class="flex items-center space-x-2 text-sm mb-6">
+          <button @click="selectedType = null" class="text-gray-500 hover:text-gray-700">
+            Types d'exercices
+          </button>
+          <ChevronRightIcon class="w-4 h-4 text-gray-400" />
+          <span class="text-gray-900 font-medium">{{ getTypeLabel(selectedType) }}</span>
+        </div>
+
+        <!-- Formulaire selon le type -->
+        <RegularityForm 
+          v-if="selectedType === 'REGULARITY'"
+          @save="saveExercise"
+          @cancel="selectedType = null"
+        />
+        
+        <!-- Placeholder pour les autres types -->
+        <div v-else class="bg-white rounded-xl shadow-sm border border-gray-200 p-8 text-center">
+          <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <Cog6ToothIcon class="w-8 h-8 text-gray-400" />
+          </div>
+          <h3 class="text-lg font-semibold text-gray-900 mb-2">En développement</h3>
+          <p class="text-gray-600 mb-4">
+            Ce type d'exercice sera disponible dans une prochaine version.
+          </p>
+          <button
+            @click="selectedType = null"
+            class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          >
+            Retour à la sélection
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { useExerciseStore } from '../stores/exercises'
-import { PHASES, DIFFICULTIES, formatDuration } from '../utils/constants'
+import RegularityForm from '../components/exercises/RegularityForm.vue'
+import {
+  ArrowPathIcon,
+  SparklesIcon,
+  QuestionMarkCircleIcon,
+  TrophyIcon,
+  ArrowRightIcon,
+  ChevronRightIcon,
+  Cog6ToothIcon
+} from '@heroicons/vue/24/outline'
 
-const route = useRoute()
 const router = useRouter()
 const exerciseStore = useExerciseStore()
 
-const loading = ref(false)
-const isEdit = computed(() => !!route.params.id)
+const selectedType = ref(null)
 
-const form = ref({
-  title: '',
-  description: '',
-  phase: '',
-  difficulty: '',
-  duration: 300,
-  repetitions: 1,
-  shots: []
-})
-
-const saveExercise = async () => {
-  loading.value = true
-  
-  try {
-    if (isEdit.value) {
-      await exerciseStore.updateExercise(route.params.id, form.value)
-    } else {
-      await exerciseStore.createExercise(form.value)
-    }
-    
-    router.push('/exercises')
-  } catch (error) {
-    console.error('Error saving exercise:', error)
-    alert('Erreur lors de la sauvegarde de l\'exercice')
-  } finally {
-    loading.value = false
+const exerciseTypes = {
+  REGULARITY: {
+    label: 'Régularité',
+    color: 'blue'
+  },
+  REGULARITY_FREE: {
+    label: 'Régularité + Jeu libre',
+    color: 'green'
+  },
+  UNCERTAINTY: {
+    label: 'Incertitude',
+    color: 'purple'
+  },
+  MATCH_SITUATION: {
+    label: 'Situation de match',
+    color: 'orange'
   }
 }
 
-onMounted(async () => {
-  if (isEdit.value) {
-    try {
-      const exercise = await exerciseStore.fetchExercise(route.params.id)
-      form.value = {
-        title: exercise.title,
-        description: exercise.description,
-        phase: exercise.phase,
-        difficulty: exercise.difficulty,
-        duration: exercise.duration,
-        repetitions: exercise.repetitions,
-        shots: exercise.shots || []
-      }
-    } catch (error) {
-      console.error('Error loading exercise:', error)
-      router.push('/exercises')
+function selectType(type) {
+  selectedType.value = type
+}
+
+function getTypeLabel(type) {
+  return exerciseTypes[type]?.label || type
+}
+
+async function saveExercise(exerciseData) {
+  try {
+    // Ajouter le type sélectionné aux données
+    const fullExerciseData = {
+      ...exerciseData,
+      type: selectedType.value,
+      phase: selectedType.value // Pour compatibilité avec l'API existante
     }
+    
+    await exerciseStore.createExercise(fullExerciseData)
+    
+    // Redirection vers la liste des exercices
+    router.push('/exercises')
+  } catch (error) {
+    console.error('Erreur lors de la création de l\'exercice:', error)
+    alert('Erreur lors de la création de l\'exercice')
   }
-})
+}
 </script>

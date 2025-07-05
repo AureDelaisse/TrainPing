@@ -5,46 +5,55 @@ Application web de gestion d'entraînements pour le tennis de table.
 ## 🚀 Démarrage rapide
 
 ### Prérequis
-- Node.js 18+
-- Docker et Docker Compose
-- npm ou yarn
+- Node.js 18+ ([télécharger ici](https://nodejs.org))
+- Git (optionnel, pour cloner le repo)
+- npm (inclus avec Node.js)
 
-### Installation
+### Installation rapide
 
 1. **Cloner le projet**
 ```bash
+git clone [URL_DU_REPO]
 cd tennis-table-app
 ```
 
-2. **Installer les dépendances**
-```bash
-npm install
-cd server && npm install
-cd ../client && npm install
-```
-
-3. **Démarrer la base de données**
-```bash
-docker-compose up -d
-```
-
-4. **Configurer la base de données**
+2. **Installer les dépendances backend**
 ```bash
 cd server
+npm install
+```
+
+3. **Configurer la base de données SQLite**
+```bash
 npx prisma db push
 npm run db:seed
 ```
 
-5. **Démarrer le serveur backend**
+4. **Installer les dépendances frontend**
 ```bash
+cd ../client
+npm install
+```
+
+5. **Démarrer l'application (2 terminaux)**
+
+**Terminal 1 - Backend :**
+```bash
+cd server
 npm run dev
 ```
 
-6. **Démarrer le client Vue (dans un nouveau terminal)**
+**Terminal 2 - Frontend :**
 ```bash
 cd client
 npm run dev
 ```
+
+L'application sera accessible à :
+- **Frontend** : http://localhost:5173
+- **Backend API** : http://localhost:3000
+
+👉 **[Guide d'installation détaillé](./docs/05-Guides/Installation.md)** avec résolution de problèmes
 
 ## 📋 Fonctionnalités
 
