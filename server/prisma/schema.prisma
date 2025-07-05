@@ -1,0 +1,103 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Exercise {
+  id          String     @id @default(cuid())
+  title       String
+  description String
+  phase       Phase
+  duration    Int        // en secondes
+  repetitions Int        @default(1)
+  difficulty  Difficulty
+  shots       Json       // Array of shot objects
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  // Relations
+  sessionExercises SessionExercise[]
+  trainingHistory  TrainingHistory[]
+
+  @@index([phase])
+  @@index([difficulty])
+}
+
+model Session {
+  id                String        @id @default(cuid())
+  title             String
+  description       String?
+  scheduledDate     DateTime
+  estimatedDuration Int           // en minutes
+  status            SessionStatus @default(PLANNED)
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+  completedAt       DateTime?
+
+  // Relations
+  exercises       SessionExercise[]
+  trainingHistory TrainingHistory[]
+
+  @@index([status])
+  @@index([scheduledDate])
+}
+
+model SessionExercise {
+  id         String @id @default(cuid())
+  sessionId  String
+  exerciseId String
+  order      Int
+
+  // Relations
+  session  Session  @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  exercise Exercise @relation(fields: [exerciseId], references: [id])
+
+  @@unique([sessionId, order])
+  @@index([sessionId])
+}
+
+model TrainingHistory {
+  id          String    @id @default(cuid())
+  sessionId   String
+  exerciseId  String
+  startedAt   DateTime
+  completedAt DateTime?
+  notes       String?
+
+  // Relations
+  session  Session  @relation(fields: [sessionId], references: [id])
+  exercise Exercise @relation(fields: [exerciseId], references: [id])
+
+  @@index([sessionId])
+}
+
+enum Phase {
+  WARM_UP
+  REGULARITY
+  UNCERTAINTY
+  MATCH_SITUATION
+}
+
+enum Difficulty {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+  EXPERT
+}
+
+enum SessionStatus {
+  PLANNED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}

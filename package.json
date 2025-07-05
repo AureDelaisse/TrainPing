@@ -1,0 +1,18 @@
+{
+  "name": "tennis-table-app",
+  "version": "1.0.0",
+  "description": "Application web de gestion d'entraînements pour le tennis de table",
+  "private": true,
+  "scripts": {
+    "dev:server": "cd server && npm run dev",
+    "dev:client": "cd client && npm run dev",
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "install:all": "npm install && cd server && npm install && cd ../client && npm install"
+  },
+  "keywords": ["tennis-table", "training", "vue", "express", "prisma"],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
